@@ -343,12 +343,13 @@ void InitApp(unsigned int width, unsigned int height, const char *title)
     int window_y = 0;
     int border_width = 0;
     XVisualInfo *vi = glXGetVisualFromFBConfig(display, selected_fbc);
-    int attrib_mask = CWBackPixel | CWEventMask;
+    int attrib_mask = CWBackPixel | CWEventMask | CWColormap;
     
     XSetWindowAttributes swa = {0};
     swa.event_mask = StructureNotifyMask | KeyPressMask | KeyReleaseMask
                      | ExposureMask | PointerMotionMask | ButtonPressMask
                      | ButtonReleaseMask;
+    swa.colormap = XCreateColormap(display, RootWindow(display, vi->screen), vi->visual, AllocNone);
 
     window = XCreateWindow(display, XDefaultRootWindow(display), 
             window_x, window_y, width, height,
